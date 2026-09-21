@@ -29,6 +29,8 @@ public class AuditLog {
 
     private LocalDateTime changedAt;
 
+    private String action;
+
     @PrePersist
     public void prePersist() {
         changedAt = LocalDateTime.now();

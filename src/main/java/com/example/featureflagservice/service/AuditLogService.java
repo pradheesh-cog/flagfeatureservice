@@ -1,10 +1,14 @@
 package com.example.featureflagservice.service;
 
+
+
 public interface AuditLogService {
 
-    void logChange(
+    void log(
             String flagKey,
+            String action,
             String oldValue,
             String newValue,
-            String changedBy);
+            String changedBy
+    );
 }
