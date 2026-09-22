@@ -1,7 +1,8 @@
 package com.example.featureflagservice.controller;
 
-import com.example.featureflagservice.dto.FeatureFlagResponse;
-import com.example.featureflagservice.service.FeatureFlagService;
+
+import com.example.featureflagservice.dto.FeatureEvaluationResponse;
+import com.example.featureflagservice.service.RolloutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,12 +11,23 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class FeatureFlagController {
 
-    private final FeatureFlagService featureFlagService;
+    private final RolloutService rolloutService;
 
-    @GetMapping("/{flagKey}")
-    public FeatureFlagResponse getFlag(
-            @PathVariable String flagKey) {
+    @GetMapping("/{flagKey}/evaluate")
+    public FeatureEvaluationResponse evaluateFlag(
+            @PathVariable String flagKey,
+            @RequestParam String userId) {
 
-        return featureFlagService.getFlag(flagKey);
+        boolean enabled =
+                rolloutService.evaluateFlag(
+                        flagKey,
+                        userId
+                );
+
+        return new FeatureEvaluationResponse(
+                flagKey,
+                userId,
+                enabled
+        );
     }
 }
