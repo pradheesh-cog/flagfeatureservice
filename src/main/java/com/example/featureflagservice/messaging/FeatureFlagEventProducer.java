@@ -2,6 +2,7 @@ package com.example.featureflagservice.messaging;
 
 import com.example.featureflagservice.dto.FeatureFlagEvent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 @Service

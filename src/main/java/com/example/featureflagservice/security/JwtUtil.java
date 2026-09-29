@@ -2,6 +2,7 @@ package com.example.featureflagservice.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -9,8 +10,11 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String SECRET =
-            "feature-flag-secret-key";
+    @Value("${jwt.secret}")
+    private String SECRET;
+
+    @Value("${jwt.expiration}")
+    private long expiration;
 
     public String generateToken(
             String username) {
@@ -21,7 +25,7 @@ public class JwtUtil {
                 .expiration(
                         new Date(
                                 System.currentTimeMillis()
-                                        + 86400000
+                                        + expiration
                         )
                 )
                 .signWith(
